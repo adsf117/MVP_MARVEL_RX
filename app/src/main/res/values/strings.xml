@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MVP_Marvel</string>
+    <string name="error_message">conection error, please check the api credentials</string>
+</resources>
