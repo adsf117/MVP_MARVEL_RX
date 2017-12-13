@@ -12,8 +12,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+            debug {
+                buildConfigField "String", "PRIVATE_API_KEY_VALUE", '"your-private-apikey"'
+                buildConfigField "String", "PUBLIC_API_KEY_VALUE", '"your-public-apikey"'
+            }
+
         release {
             minifyEnabled false
+            buildConfigField "String", "PRIVATE_API_KEY_VALUE", '"your-private-apikey"'
+            buildConfigField "String", "PUBLIC_API_KEY_VALUE", '"your-public-apikey"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

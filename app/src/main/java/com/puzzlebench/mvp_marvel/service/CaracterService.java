@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.puzzlebench.mvp_marvel.models.Data;
 import com.puzzlebench.mvp_marvel.models.MarvelResponse;
 import com.puzzlebench.mvp_marvel.models.Result;
+import com.puzzlebench.mvp_marvel.service.api.CaracterClient;
 
 import java.io.IOException;
 import java.util.ArrayList;

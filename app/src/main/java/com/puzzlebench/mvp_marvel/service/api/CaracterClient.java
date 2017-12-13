@@ -1,9 +1,9 @@
-package com.puzzlebench.mvp_marvel.service;
+package com.puzzlebench.mvp_marvel.service.api;
 
 import com.puzzlebench.mvp_marvel.models.Data;
 import com.puzzlebench.mvp_marvel.models.MarvelResponse;
 import com.puzzlebench.mvp_marvel.models.Result;
-import com.puzzlebench.mvp_marvel.service.api.MarvelCostantsApi;
+import com.puzzlebench.mvp_marvel.service.MarvelCostantsApi;
 
 import java.util.ArrayList;
 

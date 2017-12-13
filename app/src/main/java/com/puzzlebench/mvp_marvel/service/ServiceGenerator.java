@@ -1,6 +1,6 @@
 package com.puzzlebench.mvp_marvel.service;
 
-import com.puzzlebench.mvp_marvel.service.api.MarvelCostantsApi;
+import com.puzzlebench.mvp_marvel.BuildConfig;
 
 import java.io.IOException;
 
@@ -18,22 +18,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
 
-    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Request  defaultRequest = chain.request();
+    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder().addInterceptor(chain -> {
+        Request defaultRequest = chain.request();
 
-            HttpUrl defaulthttpUrl = defaultRequest.url();
-            HttpUrl httpUrl = defaulthttpUrl.newBuilder()
-                    .addQueryParameter(MarvelCostantsApi.PRIVATE_API_KEY_ARG,MarvelCostantsApi.PRIVATE_API_KEY_VALUE)
-                    .addQueryParameter(MarvelCostantsApi.PUBLIC_API_KEY_ARG,MarvelCostantsApi.PUBLIC_API_KEY_VALUE)
-                    .addQueryParameter(MarvelCostantsApi.TS,MarvelCostantsApi.TS_VALUE)
-                    .build();
+        HttpUrl defaulthttpUrl = defaultRequest.url();
+        HttpUrl httpUrl = defaulthttpUrl.newBuilder()
+                .addQueryParameter(MarvelCostantsApi.PRIVATE_API_KEY_ARG, BuildConfig.PRIVATE_API_KEY_VALUE)
+                .addQueryParameter(MarvelCostantsApi.PUBLIC_API_KEY_ARG, BuildConfig.PUBLIC_API_KEY_VALUE)
+                .addQueryParameter(MarvelCostantsApi.TS, MarvelCostantsApi.TS_VALUE)
+                .build();
 
-            Request.Builder requestBuilder = defaultRequest.newBuilder().url(httpUrl);
+        Request.Builder requestBuilder = defaultRequest.newBuilder().url(httpUrl);
 
-            return chain.proceed(requestBuilder.build());
-        }
+        return chain.proceed(requestBuilder.build());
     });
 
     private static Retrofit.Builder builder =
@@ -41,7 +38,7 @@ public class ServiceGenerator {
                     .baseUrl(MarvelCostantsApi.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create());
 
-    public static <S> S createService(Class<S> serviceClass) {
+    static <S> S createService(Class<S> serviceClass) {
         Retrofit retrofit = builder.client(httpClient.build()).build();
         return retrofit.create(serviceClass);
     }
