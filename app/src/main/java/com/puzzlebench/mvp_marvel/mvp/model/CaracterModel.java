@@ -2,7 +2,7 @@ package com.puzzlebench.mvp_marvel.mvp.model;
 
 import android.support.annotation.NonNull;
 
-import com.puzzlebench.mvp_marvel.models.Result;
+import com.puzzlebench.mvp_marvel.models.Characters;
 import com.puzzlebench.mvp_marvel.service.CaracterService;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class CaracterModel {
         this.caracterService = caracterService;
     }
 
-    public void getCaracters(@NonNull Observer<ArrayList<Result>> observer) {
+    public void getCaracters(@NonNull Observer<ArrayList<Characters>> observer) {
         caracterService.getCaracters(observer);
     }
 }

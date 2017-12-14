@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.puzzlebench.mvp_marvel.R;
 import com.puzzlebench.mvp_marvel.adapters.CaracterAdapter;
-import com.puzzlebench.mvp_marvel.models.Result;
 import com.puzzlebench.mvp_marvel.ui.ActivityView;
 import com.puzzlebench.mvp_marvel.ui.CaracterActivity;
 
@@ -32,14 +31,20 @@ public class CaracterView extends ActivityView<CaracterActivity> {
     public CaracterView(CaracterActivity activity) {
         super(activity);
         ButterKnife.bind(this, activity);
-        recyclerView.setAdapter(new CaracterAdapter(new ArrayList<Result>()));
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(llm);
+
+    }
+
+    public void init() {
+        showProgressBar();
+        recyclerView.setAdapter(new CaracterAdapter(new ArrayList<>()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
     public void setAdapter(CaracterAdapter adapter) {
         recyclerView.setAdapter(adapter);
         recyclerView.invalidate();
+
     }
 
     public void hideProgressBar() {
@@ -48,6 +53,10 @@ public class CaracterView extends ActivityView<CaracterActivity> {
 
     public void showError() {
         Toast.makeText(getContext(), errorMessge, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     public void showProgressBar() {

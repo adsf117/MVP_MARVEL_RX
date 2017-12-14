@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.puzzlebench.mvp_marvel.models.Data;
 import com.puzzlebench.mvp_marvel.models.MarvelResponse;
-import com.puzzlebench.mvp_marvel.models.Result;
+import com.puzzlebench.mvp_marvel.models.Characters;
 import com.puzzlebench.mvp_marvel.service.api.CaracterClient;
 
 import java.io.IOException;
@@ -24,12 +24,12 @@ import retrofit2.Response;
 
 public class CaracterService {
 
-    public void getCaracters(@NonNull Observer<ArrayList<Result>> observer) {
+    public void getCaracters(@NonNull Observer<ArrayList<Characters>> observer) {
 
-        Observable.create((ObservableOnSubscribe<ArrayList<Result>>) observableEmitter -> {
+        Observable.create((ObservableOnSubscribe<ArrayList<Characters>>) observableEmitter -> {
             try {
                 CaracterClient client = ServiceGenerator.createService(CaracterClient.class);
-                Response<MarvelResponse<Data<ArrayList<Result>>>> response = client.getCharacter().execute();
+                Response<MarvelResponse<Data<ArrayList<Characters>>>> response = client.getCharacter().execute();
                 observableEmitter.onNext(response.body().getData().getResults());
 
             } catch (IOException ex) {

@@ -4,7 +4,7 @@ package com.puzzlebench.mvp_marvel.models;
  * Created by andresdavid on 21/02/17.
  */
 
-public class Result {
+public class Characters {
 
     private  String name;
     private  String description;

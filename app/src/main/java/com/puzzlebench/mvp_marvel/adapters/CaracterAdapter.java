@@ -1,28 +1,35 @@
 package com.puzzlebench.mvp_marvel.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.puzzlebench.mvp_marvel.ImageLoadedCallback;
+
+import com.jakewharton.rxbinding.view.RxView;
 import com.puzzlebench.mvp_marvel.R;
-import com.puzzlebench.mvp_marvel.models.Result;
+import com.puzzlebench.mvp_marvel.models.Characters;
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 public class CaracterAdapter extends RecyclerView.Adapter<CaracterAdapter.PhotoViewHolder> {
 
-    private ArrayList<Result> items;
+    private ArrayList<Characters> items;
+    private PublishSubject<Characters> itemViewClickSubject = PublishSubject.create();
 
-    public CaracterAdapter(ArrayList<Result> items) {
+    public CaracterAdapter(ArrayList<Characters> items) {
         this.items = items;
+    }
+
+    public Observable<Characters> getViewClickedObservable() {
+        return itemViewClickSubject.asObservable();
     }
 
     @Override
@@ -33,10 +40,18 @@ public class CaracterAdapter extends RecyclerView.Adapter<CaracterAdapter.PhotoV
 
     @Override
     public void onBindViewHolder(final PhotoViewHolder viewHolder, int position) {
-        final Result item = items.get(position);
-        final String imgeUrl = item.getThumbnail().getPath()+"."+item.getThumbnail().getExtension();
+        final Characters item = items.get(position);
+        final String imgeUrl = item.getThumbnail().getPath() + "." + item.getThumbnail().getExtension();
         viewHolder.tv_item.setText(String.valueOf(item.getName()));
         Picasso.with(viewHolder.image.getContext()).load(imgeUrl).fit().centerCrop().into(viewHolder.image);
+        RxView.clicks(viewHolder.itemView)
+                .map(aVoid -> item)
+                .subscribe(itemViewClickSubject);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        itemViewClickSubject.onCompleted(); //here we avoid memory leaks
     }
 
     @Override
@@ -57,12 +72,6 @@ public class CaracterAdapter extends RecyclerView.Adapter<CaracterAdapter.PhotoV
         public PhotoViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-        }
-
-        @OnClick(R.id.image_thumbnail)
-        public void onImageClick(View view) {
-
-            Log.d(CaracterAdapter.class.getName(),"Abrir Fagment");
         }
     }
 }

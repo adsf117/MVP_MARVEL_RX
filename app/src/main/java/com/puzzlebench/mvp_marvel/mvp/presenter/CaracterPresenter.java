@@ -1,7 +1,7 @@
 package com.puzzlebench.mvp_marvel.mvp.presenter;
 
 import com.puzzlebench.mvp_marvel.adapters.CaracterAdapter;
-import com.puzzlebench.mvp_marvel.models.Result;
+import com.puzzlebench.mvp_marvel.models.Characters;
 import com.puzzlebench.mvp_marvel.mvp.model.CaracterModel;
 import com.puzzlebench.mvp_marvel.mvp.view.CaracterView;
 
@@ -21,16 +21,22 @@ public class CaracterPresenter {
     public CaracterPresenter(CaracterModel caracterModel, CaracterView caracterView) {
         this.model = caracterModel;
         this.view = caracterView;
-        init();
     }
 
-    private void init() {
-        view.showProgressBar();
-        model.getCaracters(new DisposableObserver<ArrayList<Result>>() {
+    public void showMessage(String caracterName) {
+        view.showMessage(caracterName);
+    }
+
+    public void init() {
+        view.init();
+        model.getCaracters(new DisposableObserver<ArrayList<Characters>>() {
             @Override
-            public void onNext(ArrayList<Result> results) {
+            public void onNext(ArrayList<Characters> results) {
                 view.hideProgressBar();
-                view.setAdapter(new CaracterAdapter(results));
+                CaracterAdapter adapter = new CaracterAdapter(results);
+                adapter.getViewClickedObservable()
+                        .subscribe(result -> showMessage(result.getName()));
+                view.setAdapter(adapter);
             }
 
             @Override

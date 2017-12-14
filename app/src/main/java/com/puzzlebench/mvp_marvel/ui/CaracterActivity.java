@@ -20,7 +20,9 @@ public class CaracterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        presenter = new CaracterPresenter(new CaracterModel(ServiceUtils.getItemService()), new CaracterView(this));
+        presenter = new CaracterPresenter(new CaracterModel(ServiceUtils.getItemService()),
+                new CaracterView(this));
+        presenter.init();
     }
 
     @Override

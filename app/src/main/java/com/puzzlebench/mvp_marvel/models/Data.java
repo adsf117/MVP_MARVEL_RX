@@ -1,16 +1,17 @@
 package com.puzzlebench.mvp_marvel.models;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by andresdavid on 21/02/17.
  */
 
-public class Data <T>{
+public class Data<T> {
 
     private int offset;
     private int limit;
     private int total;
+    @SerializedName("results")
     private T results;
 
     public int getOffset() {
