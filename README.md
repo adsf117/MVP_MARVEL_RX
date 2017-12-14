@@ -19,4 +19,4 @@ Using :
 2. Add Presenter Test
 
 # How it looks
-![alt text](https://github.com/adsf117/MVP_MARVEL_RX/new/master/demo_small.gif)
+![alt text](https://github.com/adsf117/MVP_MARVEL_RX/blob/master/demo_small.gif)
